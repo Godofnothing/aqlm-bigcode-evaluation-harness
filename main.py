@@ -18,6 +18,8 @@ from bigcode_eval.arguments import EvalArguments
 from bigcode_eval.evaluator import Evaluator
 from bigcode_eval.tasks import ALL_TASKS
 
+from src.modelutils import load_dequantized_model
+
 
 class MultiChoice:
     def __init__(self, choices):
@@ -297,6 +299,8 @@ def main():
                 args.model,
                 **model_kwargs,
             )
+            if args.aqlm_checkpoint_path:
+                model = load_dequantized_model(model, args.aqlm_checkpoint_path)
         elif args.modeltype == "seq2seq":
             warnings.warn(
                 "Seq2Seq models have only been tested for HumanEvalPack & CodeT5+ models."
@@ -305,6 +309,7 @@ def main():
                 args.model,
                 **model_kwargs,
             )
+
         else:
             raise ValueError(
                 f"Non valid modeltype {args.modeltype}, choose from: causal, seq2seq"
