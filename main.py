@@ -212,6 +212,12 @@ def parse_args():
         action="store_true",
         help="Don't run generation but benchmark groundtruth (useful for debugging)",
     )
+    parser.add_argument(
+        "--aqlm_checkpoint_path",
+        type=str,
+        default=None,
+        help="Path to AQLM checkpoint",
+    )
     return parser.parse_args()
 
 
